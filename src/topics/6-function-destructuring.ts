@@ -1,9 +1,7 @@
-interface  Product{
+export interface  Product{
     description: string;
     price: number;
 }
-
-
 
 const phone: Product = {
     description: 'iPhone 14 Pro Max',
@@ -20,21 +18,20 @@ const tablet: Product = {
 }
 
 
-interface taxCalculationOptions {
+export interface taxCalculationOptions {
     tax: number;
     products: Product[];
 }
 
 
-
-
-function calculateTax(options:taxCalculationOptions): number[] {
+export function calculateTax(options:taxCalculationOptions): [number, number] {
+    const { tax, products } = options;
     let total =0;
-    options.products.forEach(product => {
-        total += product.price;
+    products.forEach(({price}) => {
+        total += price;
     }
     );
-    return [total, total * options.tax]; // [total, tax]
+    return [total, total * tax]; 
 }
 
 
@@ -43,17 +40,13 @@ const shoppinCart=[phone, laptop, tablet];
 const tax = 0.15;
 
 
-const result = calculateTax({
+const [Total,taxTotal] = calculateTax({
     products: shoppinCart,
     tax: tax
 });
 
-console.log('Total: ', result[0]);
-console.log('Tax: ', result[1]);
-
-
-
-
+console.log('Total: ', Total);
+console.log('Tax: ', taxTotal);
 
 
 export {};
